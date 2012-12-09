@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 1.9.3
+notifications:
+  recipients:
+    - jari@holderdeord.no
+  irc:
+    channels:
+      - "irc.freenode.net#holderdeord"
+    on_success: change
+    on_failure: change
+    template:
+      - "%{author} | %{commit} | %{message} | %{build_url}"

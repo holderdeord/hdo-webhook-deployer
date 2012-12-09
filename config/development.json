@@ -1,0 +1,9 @@
+{
+  "logdir": "spec/tmp",
+  "projects": {
+    "holderdeord/hdo-webhook-deployer#master": {
+      "directory": ".",
+      "command": ["sh", "-c", "echo test deploy in $PWD"]
+    }
+  }
+}

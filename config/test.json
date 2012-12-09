@@ -1,0 +1,8 @@
+{
+  "logdir": "spec/tmp",
+  "projects": {
+    "testowner/testproject#master": {
+
+    }
+  }
+}
