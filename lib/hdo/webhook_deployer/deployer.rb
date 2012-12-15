@@ -54,8 +54,10 @@ module Hdo
         rescue ChildProcess::TimeoutError => ex
           log ex.message
           process.stop
+        end
 
-          raise "timed out"
+        if process.exit_code != 0
+          raise "command failed with code #{process.exit_code}: #{command.inspect}"
         end
       end
 
