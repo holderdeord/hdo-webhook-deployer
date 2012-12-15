@@ -21,6 +21,8 @@ module Hdo
       def execute
         update
         deploy
+      rescue => ex
+        log "error: #{ex.message}"
       ensure
         log 'all done'
         @log.close

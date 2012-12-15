@@ -21,7 +21,7 @@ module Hdo
           config = config_for(build)
           check_auth build, config
 
-          Deployer.new(config, build.commit).execute
+          Deployer.new(config, build.commit).async.execute
         end
       end
 
