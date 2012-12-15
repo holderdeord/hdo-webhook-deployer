@@ -29,7 +29,7 @@ module Hdo
       end
 
       post '/deploy' do
-        build = Build.new(json_body)
+        build = Build.new(json)
 
         if build.passed?
           config = config_for(build)
@@ -40,8 +40,8 @@ module Hdo
       end
 
       helpers {
-        def json_body
-          JSON.parse request.body.read
+        def json
+          JSON.parse params[:payload]
         rescue JSON::ParserError
           halt 400, 'invalid json body'
         end
