@@ -3,7 +3,8 @@ module Hdo
     class Deployer
       include Celluloid
 
-      def initialize(config)
+      def initialize(config, commit)
+        @commit    = commit
         @timeout   = config.fetch('timeout', 60)
         @directory = File.expand_path(config.fetch('directory'))
         @env = config['environment']
