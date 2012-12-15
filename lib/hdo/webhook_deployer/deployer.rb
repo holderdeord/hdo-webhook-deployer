@@ -29,7 +29,7 @@ module Hdo
       end
 
       def update
-        run %w(git pull origin master)
+        run %w(git fetch origin)
         run %W(git checkout -f #{@commit})
       end
 
