@@ -11,7 +11,21 @@ module Hdo
       }
 
       get '/' do
+        @files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s].sort_by { |e| File.mtime(e) }
+        @files = @files.reverse.map { |e| e.gsub(WebhookDeployer.logdir.to_s, '') }
+
         erb :index
+      end
+
+      get '/*.log' do |path|
+        path = WebhookDeployer.logdir.join("#{path}.log")
+
+        if path.exist?
+          content_type :text
+          send_file path.to_s
+        else
+          halt 404
+        end
       end
 
       post '/deploy' do
