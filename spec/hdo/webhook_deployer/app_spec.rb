@@ -4,7 +4,12 @@ module Hdo
   module WebhookDeployer
     describe App do
       let(:app) { App }
-      let(:deployer) { mock(Deployer, :execute => nil) }
+      let(:deployer) do
+        d = mock(Deployer, :execute => nil)
+        d.stub(:async => d)
+
+        d
+      end
       let(:default_build) {
         {
           'repository' => {
