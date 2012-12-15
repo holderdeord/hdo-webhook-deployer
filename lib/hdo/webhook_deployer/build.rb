@@ -7,7 +7,7 @@ module Hdo
       end
 
       def passed?
-        @data['status'] == 'passed'
+        @data['status'] == 0
       end
 
       def short_name
