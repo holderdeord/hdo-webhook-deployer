@@ -17,7 +17,7 @@ module Hdo
             'owner_name' => 'testowner',
             'name'       => 'testproject'
           },
-          'status' => 'passed',
+          'status' => 0,
           'branch' => 'master',
           'commit' => '6fcee6112b3bfb9ae728827dfc7fa7275f69395d'
         }
