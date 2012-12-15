@@ -34,7 +34,7 @@ module Hdo
       end
 
       def deploy
-        run(*@command)
+        run(@command)
       end
 
       def run(command)
