@@ -23,7 +23,8 @@ module Hdo
       end
 
       def log_file
-        WebhookDeployer.logdir.join("#{short_name}/#{branch}/#{commit}-#{Time.now.strftime('%Y-%m-%d-%H%M%S')}.log")
+        date, time = Time.now.strftime('%Y-%m-%d %H%M%S').split(" ")
+        WebhookDeployer.logdir.join("#{short_name}/#{branch}/#{date}/#{time}/#{commit}.log")
       end
 
     end
