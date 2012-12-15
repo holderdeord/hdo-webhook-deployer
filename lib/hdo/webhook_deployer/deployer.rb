@@ -6,35 +6,56 @@ module Hdo
       def initialize(config)
         @timeout   = config.fetch('timeout', 60)
         @directory = File.expand_path(config.fetch('directory'))
-
-        command = Array(config.fetch('command'))
-        @process = ChildProcess.build(*command)
-        @process.cwd = @directory
-
-        if config.include?('environment')
-          @process.environment.merge!(config['environment'])
-        end
+        @env = config['environment']
 
         logfile = config.fetch('logfile')
         logfile.dirname.mkpath
 
         @log = File.open(logfile, 'a')
         @log.sync = true
-        @process.io.stdout = @log
-        @process.io.stderr = @log
+
+        @command = Array(config.fetch('command'))
       end
 
       def execute
-        log 'deploying'
-
-        @process.start
-        @process.poll_for_exit @timeout
-      rescue ChildProcess::TimeoutError => ex
-        log ex.message
-        @process.stop
+        update
+        deploy
       ensure
         log 'all done'
         @log.close
+      end
+
+      def update
+        run %w(git pull origin master)
+        run %W(git checkout -f #{@commit})
+      end
+
+      def deploy
+        run(*@command)
+      end
+
+      def run(command)
+        log "running #{command.inspect}"
+
+        process     = ChildProcess.build(*command)
+        process.cwd = @directory
+
+        if @env
+          process.environment.merge!(@env)
+        end
+
+        process.io.stdout = @log
+        process.io.stderr = @log
+
+        begin
+          process.start
+          process.poll_for_exit @timeout
+        rescue ChildProcess::TimeoutError => ex
+          log ex.message
+          process.stop
+
+          raise "timed out"
+        end
       end
 
       def log(msg)
