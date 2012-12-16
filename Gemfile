@@ -5,6 +5,7 @@ gem 'json'
 gem 'celluloid'
 gem 'childprocess'
 gem 'rake'
+gem 'statsd-ruby', :require => 'statsd'
 
 group :development do
   gem 'puma'

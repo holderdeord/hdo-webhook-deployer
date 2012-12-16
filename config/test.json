@@ -1,5 +1,6 @@
 {
   "logdir": "spec/tmp",
+  "statsd": "localhost:8125",
   "projects": {
     "testowner/testproject#master": {
 

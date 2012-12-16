@@ -21,7 +21,10 @@ module Hdo
       def execute
         update
         deploy
+
+        WebhookDeployer.statsd.increment 'deploy.success'
       rescue => ex
+        WebhookDeployer.statsd.increment 'deploy.failure'
         log "error: #{ex.message}"
       ensure
         log 'all done'

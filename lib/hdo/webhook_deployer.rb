@@ -4,6 +4,7 @@ require 'childprocess'
 require 'json'
 require 'pathname'
 require 'digest'
+require 'statsd'
 
 module Hdo
   module WebhookDeployer
@@ -31,6 +32,13 @@ module Hdo
 
       def projects
         config.fetch('projects')
+      end
+
+      def statsd
+        @statsd ||= (
+          host, port = config.fetch('statsd').split(":", 2)
+          Statsd.new host, Integer(port)
+        )
       end
     end
 
