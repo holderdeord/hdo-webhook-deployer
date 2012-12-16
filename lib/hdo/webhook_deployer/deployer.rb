@@ -20,8 +20,7 @@ module Hdo
 
       def execute
         update
-        deploy
-
+        WebhookDeployer.statsd.time('deploy.time') { deploy }
         WebhookDeployer.statsd.increment 'deploy.success'
       rescue => ex
         WebhookDeployer.statsd.increment 'deploy.failure'
