@@ -1,3 +1,5 @@
+require 'pp'
+
 module Hdo
   module WebhookDeployer
     class App < Sinatra::Base
@@ -11,13 +13,13 @@ module Hdo
       }
 
       get '/' do
-        @files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s].sort_by { |e| File.mtime(e) }
-        @files = @files.reverse.map { |e| e.gsub(WebhookDeployer.logdir.to_s, '') }
+        files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s].sort_by { |e| File.mtime(e) }.reverse
+        @deploys = files.map { |path| Deploy.new(path) }
 
-        erb :index
+        erb :index, layout: true
       end
 
-      get '/*.log' do |path|
+      get '/output/*.log' do |path|
         path = WebhookDeployer.logdir.join("#{path}.log")
 
         if path.exist?

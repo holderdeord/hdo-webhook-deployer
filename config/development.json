@@ -1,5 +1,5 @@
 {
-  "logdir": "spec/tmp",
+  "logdir": "log",
   "statsd": "localhost:8125",
   "projects": {
     "holderdeord/hdo-webhook-deployer#master": {

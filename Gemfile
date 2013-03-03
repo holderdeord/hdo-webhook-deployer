@@ -1,4 +1,4 @@
-source :rubygems
+source "https://rubygems.org"
 
 gem 'sinatra'
 gem 'json'
@@ -17,7 +17,6 @@ group :test do
   gem 'rack-test'
 end
 
-# not real dependencies, but convenient
 gem 'capistrano'
 gem 'capistrano-maintenance'
 gem 'capistrano-ext'

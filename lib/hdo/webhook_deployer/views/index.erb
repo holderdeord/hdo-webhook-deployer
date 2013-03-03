@@ -1,5 +1,10 @@
 <ul>
-  <% @files.each do |file| %>
-  <li><a href="<%= file %>"><%= file %></li>
+  <% @deploys.each do |deploy| %>
+  <li>
+    <%= deploy.time.strftime("%Y-%m-%d %H:%M:%S") %>: <code><%= deploy.short_sha %></code>
+
+    <a href="output<%= deploy.file %>">log</a>
+    <a href="<%= deploy.url %>">commit</a>
+  </li>
   <% end %>
 </ul>

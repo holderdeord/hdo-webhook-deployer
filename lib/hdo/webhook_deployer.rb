@@ -47,4 +47,5 @@ end
 
 require 'hdo/webhook_deployer/build'
 require 'hdo/webhook_deployer/deployer'
+require 'hdo/webhook_deployer/deploy'
 require 'hdo/webhook_deployer/app'
