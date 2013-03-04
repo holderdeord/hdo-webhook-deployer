@@ -13,8 +13,8 @@ module Hdo
       }
 
       get '/' do
-        files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s].sort_by { |e| File.mtime(e) }.reverse
-        @deploys = files.map { |path| Deploy.new(path) }
+        files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s]
+        @deploys = files.map { |path| Deploy.new(path) }.sort_by { |e| e.time }.reverse
 
         erb :index, layout: true
       end
