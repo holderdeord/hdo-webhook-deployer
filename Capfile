@@ -39,8 +39,11 @@ namespace :deploy do
 
     if fetch(:normalize_asset_timestamps, true)
       stamp = Time.now.utc.strftime("%Y%m%d%H%M.%S")
-      asset_paths = %w(images css).map { |p| "#{latest_release}/public/#{p}" }.join(" ")
-      run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
+      asset_paths = %w(images css).map { |p| "#{latest_release}/public/#{p}" }.select { |e| File.exist?(e) }.join(" ")
+      unless asset_paths.strip.empty?
+        run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
+      end
+
     end
   end
 end
