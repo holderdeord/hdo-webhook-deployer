@@ -6,10 +6,20 @@
   </head>
 
   <body class="container">
-    <h1>deploys</h1>
-
+    <h2>current</h2>
+    <dl>
+      <% %w[next beta app1 app2].each do |host| %>
+      <dt><%= host %>.holderdeord.no</dt>
+      <dd data-host="<%= host %>.holderdeord.no">unknown</dd>
+      <% end %>
+    </dl>
+    
+    <h2>deploys</h2>
     <div class="content">
       <%= yield %>
     </div>
+    
+    <script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>
