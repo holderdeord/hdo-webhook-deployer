@@ -9,12 +9,12 @@
     <h2>current</h2>
     <dl>
       <% %w[next beta app1 app2].each do |host| %>
-      <dt><%= host %>.holderdeord.no</dt>
-      <dd data-host="<%= host %>.holderdeord.no">unknown</dd>
+        <dt><a href="http://<%= host %>.holderdeord.no/"><%= host %>.holderdeord.no</a></dt>
+        <dd data-host="<%= host %>.holderdeord.no">unknown</dd>
       <% end %>
     </dl>
     
-    <h2>deploys</h2>
+    <h2>auto-deploys (to next)</h2>
     <div class="content">
       <%= yield %>
     </div>
