@@ -33,9 +33,11 @@ namespace :deploy do
     # mkdir -p is making sure that the directories are there for some SCM's that don't save empty folders
     run <<-CMD
       rm -rf #{latest_release}/log &&
+      rm -rf #{latest_release}/config &&
       mkdir -p #{latest_release}/public &&
       mkdir -p #{latest_release}/tmp &&
       ln -s #{shared_path}/log #{latest_release}/log
+      ln -s #{shared_path}/config #{latest_release}/config
     CMD
 
     if fetch(:normalize_asset_timestamps, true)
