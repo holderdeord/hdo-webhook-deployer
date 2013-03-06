@@ -1,11 +1,18 @@
-require 'pp'
-
 module Hdo
   module WebhookDeployer
     class App < Sinatra::Base
 
+      enable :sessions
+
       set :public_folder, File.expand_path("../public", __FILE__)
       set :views,         File.expand_path("../views", __FILE__)
+      set :org_name,      'holderdeord'
+      set :github_options, {
+        :client_id => WebhookDeployer.config['github_client_id'] || ENV['GITHUB_CLIENT_ID'],
+        :secret    => WebhookDeployer.config['github_client_secret'] || ENV['GITHUB_CLIENT_SECRET']
+      }
+
+      register Sinatra::Auth::Github
 
       configure {
         raise "no projects configured" if WebhookDeployer.projects.empty?
@@ -20,6 +27,8 @@ module Hdo
       end
 
       get '/output/*.log' do |path|
+        assert_organization_member
+
         path = WebhookDeployer.logdir.join("#{path}.log")
 
         if path.exist?
@@ -35,7 +44,7 @@ module Hdo
 
         if build.passed?
           config = config_for(build)
-          check_auth build, config
+          check_travis_auth build, config
 
           Deployer.new(config, build.commit).async.execute
         end
@@ -59,7 +68,7 @@ module Hdo
           config.merge('logfile' => build.log_file)
         end
 
-        def check_auth(build, config)
+        def check_travis_auth(build, config)
           token = config['token'] || ENV['TRAVIS_TOKEN']
           return if token.nil?
 
@@ -67,6 +76,10 @@ module Hdo
           actual   = request.env['HTTP_AUTHORIZATION']
 
           halt 401 if actual != expected
+        end
+
+        def assert_organization_member
+          github_organization_authenticate!(settings.org_name)
         end
       }
 

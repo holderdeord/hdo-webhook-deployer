@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'sinatra/auth/github'
 require 'celluloid'
 require 'childprocess'
 require 'json'

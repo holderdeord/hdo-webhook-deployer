@@ -6,6 +6,7 @@ gem 'celluloid'
 gem 'childprocess'
 gem 'rake'
 gem 'statsd-ruby', :require => 'statsd'
+gem 'sinatra_auth_github'
 
 group :development do
   gem 'puma'
