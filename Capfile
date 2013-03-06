@@ -1,7 +1,7 @@
 load 'deploy'
 require 'bundler/capistrano'
 
-set :domain, "hooks.holderdeord.no"
+set :domain, "deploy.holderdeord.no"
 set :application, "hdo-webhook-deployer"
 set :deploy_to, "/webapps/#{application}"
 
