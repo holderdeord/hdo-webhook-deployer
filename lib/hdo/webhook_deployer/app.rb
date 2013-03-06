@@ -39,7 +39,7 @@ module Hdo
         end
       end
 
-      post '/deploy' do
+      post '/travis' do
         build = Build.new(json)
 
         if build.passed?
@@ -75,7 +75,10 @@ module Hdo
           expected = Digest::SHA256.hexdigest("#{build.short_name}#{token}")
           actual   = request.env['HTTP_AUTHORIZATION']
 
-          halt 401 if actual != expected
+          if actual != expected
+            warden.custom_failure!
+            halt 401
+          end
         end
 
         def assert_organization_member
