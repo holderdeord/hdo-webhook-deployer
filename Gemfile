@@ -7,6 +7,7 @@ gem 'childprocess'
 gem 'rake'
 gem 'statsd-ruby', :require => 'statsd'
 gem 'sinatra_auth_github'
+gem 'hipchat'
 
 group :development do
   gem 'puma'

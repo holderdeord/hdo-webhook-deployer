@@ -27,9 +27,16 @@ GEM
     ffi (1.2.0)
     hashie (1.2.0)
     highline (1.6.15)
+    hipchat (0.7.0)
+      httparty
+      httparty
+    httparty (0.10.2)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     json (1.7.5)
     method_source (0.8.1)
     multi_json (1.6.1)
+    multi_xml (0.5.3)
     multipart-post (1.2.0)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -92,6 +99,7 @@ DEPENDENCIES
   capistrano-maintenance
   celluloid
   childprocess
+  hipchat
   json
   pry
   puma
