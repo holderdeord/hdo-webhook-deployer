@@ -17,6 +17,7 @@ end
 group :test do
   gem 'rspec'
   gem 'rack-test'
+  gem 'coveralls', require: false
 end
 
 gem 'capistrano'

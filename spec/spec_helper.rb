@@ -1,5 +1,8 @@
 ENV['RACK_ENV'] = 'test'
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'rspec'
 require 'rack/test'
 require 'hdo/webhook_deployer'
