@@ -1,3 +1,5 @@
+require 'pp'
+
 module Hdo
   module WebhookDeployer
     class App < Sinatra::Base
@@ -44,10 +46,26 @@ module Hdo
 
         if build.passed?
           config = config_for(build)
-          check_travis_auth build, config
+          check_travis_auth build.short_name, config['token']
 
           Deployer.new(config, build.commit).async.execute
         end
+      end
+
+      post '/travis/bundle' do
+        pp params
+      end
+
+      put '/travis/bundle' do
+        pp params
+      end
+
+      get '/travis/bundle' do
+        pp params
+      end
+
+      get '/travis/bundle/sha' do
+        '8b342388b89a702e3c8530cf541f8b17a2d2ffdc'
       end
 
       helpers {
@@ -68,11 +86,11 @@ module Hdo
           config.merge('logfile' => build.log_file)
         end
 
-        def check_travis_auth(build, config)
-          token = config['token'] || ENV['TRAVIS_TOKEN']
+        def check_travis_auth(build_name, token)
+          token ||= ENV['TRAVIS_TOKEN']
           return if token.nil?
 
-          expected = Digest::SHA256.hexdigest("#{build.short_name}#{token}")
+          expected = Digest::SHA256.hexdigest("#{build_name}#{token}")
           actual   = request.env['HTTP_AUTHORIZATION']
 
           if actual != expected
