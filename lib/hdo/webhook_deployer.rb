@@ -26,6 +26,10 @@ module Hdo
         @logdir ||= Pathname.new File.expand_path(config.fetch('logdir'))
       end
 
+      def bundledir
+        @bundledir ||= logdir.join('bundle')
+      end
+
       def project_for(name)
         # dup ?
         projects[name]

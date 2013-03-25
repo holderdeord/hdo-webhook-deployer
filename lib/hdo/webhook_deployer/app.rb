@@ -1,5 +1,3 @@
-require 'pp'
-
 module Hdo
   module WebhookDeployer
     class App < Sinatra::Base
@@ -52,20 +50,48 @@ module Hdo
         end
       end
 
-      post '/travis/bundle' do
-        pp params
-      end
-
       put '/travis/bundle' do
-        pp params
+        check_basic_auth
+
+        path = bundle_path_for(params)
+        path.dirname.mkpath
+
+        sha = Digest::SHA1.new
+
+        File.open(path.to_s, 'wb') do |io|
+          env['rack.input'].each do |str|
+            sha << str
+            io << str
+          end
+        end
+
+        sha_path = bundle_path_for(params).join('sha1')
+        sha_path.open { |io| io << sha.hexdigest }
+
+        'ok'
       end
 
       get '/travis/bundle' do
-        pp params
+        check_basic_auth
+
+        path = bundle_path_for(params).to_s
+        send_file path, :filename => 'bundle.tgz'
       end
 
       get '/travis/bundle/sha' do
-        '8b342388b89a702e3c8530cf541f8b17a2d2ffdc'
+        check_basic_auth
+
+        path = "#{bundle_path_for(params)}.sha1"
+        path.read
+      end
+
+      put '/travis/bundle/sha' do
+        check_basic_auth
+
+        path = "#{bundle_path_for(params)}.sha1"
+        File.open(path, 'w') do |io|
+          env['rack.input'].each { |d| io << d }
+        end
       end
 
       helpers {
@@ -84,6 +110,21 @@ module Hdo
           config or halt(404, "no such project: #{name_and_branch}")
 
           config.merge('logfile' => build.log_file)
+        end
+
+        def bundle_path_for(params)
+          halt 400 unless params[:repo_slug] && params[:branch]
+          WebhookDeployer.bundledir.join(params[:repo_slug]).join(params[:branch]).join("bundle.tgz")
+        end
+
+        def check_basic_auth
+          auth = Rack::Auth::Basic::Request.new(request.env)
+          expected = WebhookDeployer.config['basic_auth'].split(' ')
+
+          unless auth.provided? && auth.basic? && auth.credentials && (auth.credentials == expected)
+            warden.custom_failure!
+            halt 401
+          end
         end
 
         def check_travis_auth(build_name, token)

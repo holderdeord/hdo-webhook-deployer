@@ -1,6 +1,7 @@
 {
   "logdir": "log",
   "statsd": "localhost:8125",
+  "basic_auth": "foo:bar",
   "projects": {
     "holderdeord/hdo-webhook-deployer#master": {
       "directory": ".",
