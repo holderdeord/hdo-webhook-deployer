@@ -56,17 +56,11 @@ module Hdo
         path = bundle_path_for(params)
         path.dirname.mkpath
 
-        sha = Digest::SHA1.new
-
         File.open(path.to_s, 'wb') do |io|
           env['rack.input'].each do |str|
-            sha << str
             io << str
           end
         end
-
-        sha_path = bundle_path_for(params).join('sha1')
-        sha_path.open { |io| io << sha.hexdigest }
 
         'ok'
       end
@@ -82,7 +76,7 @@ module Hdo
         check_basic_auth
 
         path = "#{bundle_path_for(params)}.sha1"
-        path.read
+        File.read(path)
       end
 
       put '/travis/bundle/sha' do
