@@ -108,7 +108,11 @@ module Hdo
 
         def bundle_path_for(params)
           halt 400 unless params[:repo_slug] && params[:branch]
-          WebhookDeployer.bundledir.join(params[:repo_slug]).join(params[:branch]).join("bundle.tgz")
+          path = WebhookDeployer.bundledir.join(params[:repo_slug]).join(params[:branch]).join("bundle.tgz")
+
+          path.dirname.mkpath
+
+          path
         end
 
         def check_basic_auth
