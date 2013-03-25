@@ -19,6 +19,14 @@ role :db,  domain, :primary => true
 
 set :deploy_via, :remote_cache
 
+if ENV['HIPCHAT_API_TOKEN']
+  require "hipchat/capistrano"
+
+  set :hipchat_token,     ENV["HIPCHAT_API_TOKEN"]
+  set :hipchat_room_name, "Teknisk"
+  set :hipchat_announce,  false
+end
+
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
@@ -47,4 +55,3 @@ namespace :deploy do
     end
   end
 end
-
