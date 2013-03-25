@@ -107,8 +107,8 @@ module Hdo
         end
 
         def bundle_path_for(params)
-          halt 400 unless params[:repo_slug] && params[:branch]
-          path = WebhookDeployer.bundledir.join(params[:repo_slug]).join(params[:branch]).join("bundle.tgz")
+          halt 400 unless params[:repo_slug]
+          path = WebhookDeployer.bundledir.join(params[:repo_slug]).join("bundle.tgz")
 
           path.dirname.mkpath
 
