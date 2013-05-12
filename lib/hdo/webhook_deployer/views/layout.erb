@@ -7,20 +7,20 @@
 
   <body class="container">
     <h1>Holder de ord</h1>
-    
+
     <h2>current</h2>
     <dl class="aside">
-      <% %w[next beta app1 app2].each do |host| %>
+      <% %w[next app1 app2].each do |host| %>
         <dt><strong><a href="http://<%= host %>.holderdeord.no/"><%= host %>.holderdeord.no</a></strong></dt>
         <dd data-host="<%= host %>.holderdeord.no"><pre>unknown</pre></dd>
       <% end %>
     </dl>
-    
+
     <h2>auto-deploys (to next)</h2>
     <div class="content">
       <%= yield %>
     </div>
-    
+
     <script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
   </body>
