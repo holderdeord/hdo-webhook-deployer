@@ -133,6 +133,8 @@ module Hdo
           actual   = request.env['HTTP_AUTHORIZATION']
 
           if actual != expected
+            puts "travis auth failed: #{request.env.inspect}"
+
             warden.custom_failure!
             halt 401
           end
