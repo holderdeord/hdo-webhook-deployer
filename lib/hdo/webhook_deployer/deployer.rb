@@ -36,7 +36,11 @@ module Hdo
       end
 
       def deploy
-        run(@command)
+        command = @command.map do |e|
+          e.gsub("%{sha}", @commit.to_s)
+        end
+
+        run command
       end
 
       def run(command)

@@ -4,3 +4,10 @@
 [![Dependency Status](https://gemnasium.com/holderdeord/hdo-webhook-deployer.png)](https://gemnasium.com/holderdeord/hdo-webhook-deployer)
 
 Enables continuous deployment using [Travis webhooks](http://about.travis-ci.org/docs/user/notifications/#Webhook-notification) (https://github.com/holderdeord/hdo-site/issues/367).
+
+Command replacements
+--------------------
+
+The 'command' from the config file may contain the following replacements:
+
+* %{sha} - revision sha
