@@ -12,6 +12,7 @@ set :scm, :git
 set :repository,  "git@github.com:holderdeord/hdo-webhook-deployer.git"
 set :branch, 'master'
 set :git_shallow_clone, 1
+set :shell, "/bin/bash -l"
 
 role :web, domain
 role :app, domain
