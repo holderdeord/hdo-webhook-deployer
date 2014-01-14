@@ -9,7 +9,7 @@ set :user, "hdo"
 set :use_sudo, false
 
 set :scm, :git
-set :repository,  "git@github.com:holderdeord/hdo-webhook-deployer.git"
+set :repository,  "git://github.com/holderdeord/hdo-webhook-deployer.git"
 set :branch, 'master'
 set :git_shallow_clone, 1
 set :default_shell, "/bin/bash -l"
