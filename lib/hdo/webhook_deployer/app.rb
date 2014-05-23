@@ -20,10 +20,12 @@ module Hdo
       }
 
       get '/' do
-        files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s]
-        @deploys = files.map { |path| Deploy.new(path) }.sort_by { |e| e.time }.reverse
-
+        @deploys = fetch_deploys
         erb :index, layout: true
+      end
+
+      get '/deploys', provides: :json do
+        fetch_deploys.to_json
       end
 
       get '/output/*.log' do |path|
@@ -142,6 +144,11 @@ module Hdo
 
         def assert_organization_member
           github_organization_authenticate!(settings.org_name)
+        end
+
+        def fetch_deploys
+          files = Dir[WebhookDeployer.logdir.join("**/*.log").to_s]
+          files.map { |path| Deploy.new(path) }.sort_by { |e| e.time }.reverse
         end
       }
 

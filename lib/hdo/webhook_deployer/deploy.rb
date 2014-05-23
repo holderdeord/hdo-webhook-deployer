@@ -18,6 +18,17 @@ module Hdo
       def url
         "https://github.com/#{user}/#{repo}/commit/#{sha}"
       end
+
+      def to_json(*args)
+        {
+          url: url,
+          sha: sha,
+          user: user,
+          repo: repo,
+          branch: branch,
+          time: time
+        }.to_json(*args)
+      end
     end
   end
 end
