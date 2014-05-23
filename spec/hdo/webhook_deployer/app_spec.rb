@@ -5,7 +5,7 @@ module Hdo
     describe App do
       let(:app) { App }
       let(:deployer) do
-        d = mock(Deployer, :execute => nil)
+        d = double(Deployer, :execute => nil)
         d.stub(:async => d)
 
         d
