@@ -7,7 +7,7 @@ module Hdo
         @commit    = commit
         @timeout   = config.fetch('timeout', 60)
         @directory = File.expand_path(config.fetch('directory'))
-        @env = config['environment']
+        @env       = {'GIT_COMMIT' => commit}.merge(config['environment'] || {})
 
         logfile = config.fetch('logfile')
         logfile.dirname.mkpath
@@ -49,9 +49,7 @@ module Hdo
         process     = ChildProcess.build(*command)
         process.cwd = @directory
 
-        if @env
-          process.environment.merge!(@env)
-        end
+        process.environment.merge!(@env)
 
         process.io.stdout = @log
         process.io.stderr = @log
