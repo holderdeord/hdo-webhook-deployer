@@ -85,7 +85,7 @@ module Hdo
       end
 
       def notify(msg, color = :yellow)
-        Hdo::WebHookDeployer.hipchat['Teknisk'].send('Deployer', msg, :color => color)
+        WebhookDeployer.hipchat['Teknisk'].send('Deployer', msg, :color => color)
       rescue => ex
         @log.puts "HipChat error: #{ex.message}"
       end
