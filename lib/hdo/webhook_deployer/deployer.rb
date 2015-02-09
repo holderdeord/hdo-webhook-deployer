@@ -3,11 +3,14 @@ module Hdo
     class Deployer
       include Celluloid
 
-      def initialize(config, commit)
+      URL = "http://deploy.holderdeord.no/"
+
+      def initialize(key, config, commit)
+        @key       = key
         @commit    = commit
         @timeout   = config.fetch('timeout', 60)
         @directory = File.expand_path(config.fetch('directory'))
-        @env = config['environment']
+        @env       = config['environment']
 
         logfile = config.fetch('logfile')
         logfile.dirname.mkpath
@@ -19,12 +22,18 @@ module Hdo
       end
 
       def execute
+        notify "#{URL} | #{@key} is being deployed"
+
         update
         WebhookDeployer.statsd.time('deploy.time') { deploy }
         WebhookDeployer.statsd.increment 'deploy.success'
+
+        notify "#{URL} | #{@key} was successfully deployed"
       rescue => ex
         WebhookDeployer.statsd.increment 'deploy.failure'
+
         log "error: #{ex.message}"
+        notify "#{URL} | #{@key} deployment failed"
       ensure
         log 'all done'
         @log.close
@@ -73,6 +82,12 @@ module Hdo
         unless @log.closed?
           @log.puts "[#{Time.now}: #{@directory}] - #{msg}"
         end
+      end
+
+      def notify(msg, color = :yellow)
+        Hdo::WebHookDeployer.hipchat['Teknisk'].send('Deployer', msg, :color => color)
+      rescue => ex
+        @log.puts "HipChat error: #{ex.message}"
       end
 
     end

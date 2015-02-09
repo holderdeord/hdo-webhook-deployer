@@ -39,6 +39,10 @@ module Hdo
         config.fetch('projects')
       end
 
+      def hipchat
+        @client ||= Hipchat::Client.new(config.fetch('hipchat_token'))
+      end
+
       def statsd
         @statsd ||= (
           host, port = config.fetch('statsd').split(":", 2)

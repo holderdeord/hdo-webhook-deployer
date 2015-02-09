@@ -23,7 +23,7 @@ module Hdo
 
         ChildProcess.should_receive(:build).with("foo", "bar", "revision=5e7cac").and_return(mock_process)
 
-        deployer = Deployer.new(config, '5e7cac')
+        deployer = Deployer.new("name/repo", config, '5e7cac')
         deployer.deploy
       end
     end

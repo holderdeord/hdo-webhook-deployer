@@ -1,9 +1,8 @@
 <ul>
   <% @deploys.each do |deploy| %>
   <li>
-    <%= deploy.repo %>/<%= deploy.user %>
-    <%= deploy.time.strftime("%Y-%m-%d %H:%M:%S") %>: <code><%= deploy.short_sha %></code>
-    <a href="<%= deploy.url %>"><%= deploy.sha %></a>
+    <%= deploy.user %>/<%= deploy.repo %>#<%= deploy.branch %>
+    <%= deploy.time.strftime("%Y-%m-%d %H:%M:%S") %>: <a href="<%= deploy.url %>"><code><%= deploy.short_sha %></code></a>
     <a href="output<%= deploy.file %>">log</a>
   </li>
   <% end %>

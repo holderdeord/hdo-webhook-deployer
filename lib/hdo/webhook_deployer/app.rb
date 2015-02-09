@@ -48,7 +48,7 @@ module Hdo
           config = config_for(build)
           check_travis_auth build.short_name, config['token']
 
-          Deployer.new(config, build.commit).async.execute
+          Deployer.new("#{build.short_name}##{build.branch}", config, build.commit).async.execute
         end
       end
 
