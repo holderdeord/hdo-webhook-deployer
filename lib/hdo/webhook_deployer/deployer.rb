@@ -86,7 +86,7 @@ module Hdo
 
       def notify(msg, color = :yellow)
         str = "<a href='#{URL}'>deploy.hdo</a> | <a href='https://github.com/#{@key}'>#{@key}</a> #{msg}"
-        WebhookDeployer.hipchat['Teknisk'].send('Deployer', str, :color => color)
+        WebhookDeployer.hipchat['Teknisk'].send('Deployer', str, :color => color.to_s)
       rescue => ex
         @log.puts "HipChat error: #{ex.message}"
       end
