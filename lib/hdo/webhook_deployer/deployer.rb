@@ -22,18 +22,18 @@ module Hdo
       end
 
       def execute
-        notify "#{URL} | #{@key} is being deployed"
+        notify "is being deployed"
 
         update
         WebhookDeployer.statsd.time('deploy.time') { deploy }
         WebhookDeployer.statsd.increment 'deploy.success'
 
-        notify "#{URL} | #{@key} was successfully deployed", :color => :green
+        notify "was successfully deployed", :color => :green
       rescue => ex
         WebhookDeployer.statsd.increment 'deploy.failure'
 
         log "error: #{ex.message}"
-        notify "#{URL} | #{@key} deployment failed", :color => :red
+        notify "deployment failed", :color => :red
       ensure
         log 'all done'
         @log.close
@@ -85,7 +85,8 @@ module Hdo
       end
 
       def notify(msg, color = :yellow)
-        WebhookDeployer.hipchat['Teknisk'].send('Deployer', msg, :color => color)
+        str = "<a href='#{URL}'>deploy.hdo</a> | <a href='https://github.com/#{@key}'>#{@key}</a> #{msg}"
+        WebhookDeployer.hipchat['Teknisk'].send('Deployer', str, :color => color)
       rescue => ex
         @log.puts "HipChat error: #{ex.message}"
       end
