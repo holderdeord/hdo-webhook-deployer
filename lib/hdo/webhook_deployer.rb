@@ -6,6 +6,7 @@ require 'json'
 require 'pathname'
 require 'digest'
 require 'statsd'
+require 'hipchat'
 
 module Hdo
   module WebhookDeployer
