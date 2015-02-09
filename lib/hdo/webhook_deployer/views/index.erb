@@ -1,10 +1,10 @@
 <ul>
   <% @deploys.each do |deploy| %>
   <li>
+    <%= deploy.repo %>/<%= deploy.user %>
     <%= deploy.time.strftime("%Y-%m-%d %H:%M:%S") %>: <code><%= deploy.short_sha %></code>
-
+    <a href="<%= deploy.url %>"><%= deploy.sha %></a>
     <a href="output<%= deploy.file %>">log</a>
-    <a href="<%= deploy.url %>">commit</a>
   </li>
   <% end %>
 </ul>
