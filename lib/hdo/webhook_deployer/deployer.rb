@@ -28,12 +28,12 @@ module Hdo
         WebhookDeployer.statsd.time('deploy.time') { deploy }
         WebhookDeployer.statsd.increment 'deploy.success'
 
-        notify "#{URL} | #{@key} was successfully deployed"
+        notify "#{URL} | #{@key} was successfully deployed", :color => :green
       rescue => ex
         WebhookDeployer.statsd.increment 'deploy.failure'
 
         log "error: #{ex.message}"
-        notify "#{URL} | #{@key} deployment failed"
+        notify "#{URL} | #{@key} deployment failed", :color => :red
       ensure
         log 'all done'
         @log.close
