@@ -41,7 +41,7 @@ module Hdo
       end
 
       def hipchat
-        @hipchat ||= HipChat::Client.new(config.fetch('hipchat_token'))
+        @hipchat ||= HipChat::Client.new(config.fetch('hipchat_token'), :api_version => 'v2')
       end
 
       def statsd

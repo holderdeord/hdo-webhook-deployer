@@ -32,8 +32,7 @@ GEM
     ffi (1.8.1)
     hashie (2.0.4)
     highline (1.6.18)
-    hipchat (0.8.0)
-      httparty
+    hipchat (1.4.0)
       httparty
     httparty (0.11.0)
       multi_json (~> 1.0)
@@ -41,8 +40,8 @@ GEM
     json (1.7.7)
     method_source (0.8.1)
     mime-types (1.23)
-    multi_json (1.7.2)
-    multi_xml (0.5.3)
+    multi_json (1.10.1)
+    multi_xml (0.5.5)
     multipart-post (1.2.0)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
